@@ -27,7 +27,8 @@ public class ExpToCnf{
     }
 
     public static String getCnf(String expression){
-        //look for first operator with a open bracket count of zero
+        System.out.println("Current expression is: " + expression);
+
         String result = "";
         int openBrackets = 0;
         int closedBrackets = 0;
@@ -41,7 +42,7 @@ public class ExpToCnf{
             }
 
             String propOp = PropositionalOperator(expression, i);
-            System.out.println(propOp);
+            //System.out.println(propOp);
 
             if(propOp != null){
                 if(openBrackets == closedBrackets){
@@ -60,12 +61,26 @@ public class ExpToCnf{
     }
 
     public static String Convert(String left, String right, String operator){
+        left = left.trim();
+        right = right.trim();
+        operator = operator.trim();
+
+
+        //TODO: does this bracket handling need to be more robust
+        if(left.charAt(0) == '(' && left.charAt(left.length() -1) == ')'){
+            left = left.substring(1, left.length());
+        }
+
+        if(right.charAt(0) == '(' && right.charAt(right.length() -1) == ')'){
+            right = right.substring(1, right.length());
+        }
+
         System.out.println(left);
         System.out.println(right);
         System.out.println(operator);
 
         if(operator == "<->"){
-            getCnf("(" + left + "^" + right + ")" + " v" + "(~" + left + "^" + "~" + right + ")");
+            getCnf("(" + left + " ^ " + right + ")" + " v " + "(~" + left + " ^ " + "~" + right + ")");
         }
 
         return "fart";
@@ -77,6 +92,10 @@ public class ExpToCnf{
             if(expression.substring(index, index + 3).equals("<->")){
                 return "<->";
             }    
+        }
+
+        if(expression.substring(index, index + 1).equals("v")){
+            return "v";
         }
 
 
