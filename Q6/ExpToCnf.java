@@ -27,7 +27,7 @@ public class ExpToCnf{
     }
 
     public static String getCnf(String expression){
-        System.out.println("\nCurrent expression is: " + expression);
+        System.out.println("\n\nCurrent expression is: " + expression);
 
         int openBrackets = 0;
         int closedBrackets = 0;
@@ -39,13 +39,6 @@ public class ExpToCnf{
             return expression;
         }
 
-        ///
-        /// Rule 2: a, b, c
-        ///
-        if(expression.charAt(0) == '~'){
-            System.out.println("Expression starts with ~");
-            
-        }
 
         ///
         /// Rule 3,4, and 5
@@ -73,6 +66,18 @@ public class ExpToCnf{
 
         }
 
+        ///
+        /// Rule 2: a
+        ///
+        //System.out.println(expression.substring(0, 3));
+        //if(expression.substring(0, 3).equals("~(~")){
+        if(expression.charAt(0) == '~' && expression.charAt(1) == '(' && expression.charAt(2) == '~'){
+            System.out.println("Apply rule 2s");
+            return expression.substring(2, expression.length() - 1);
+            //this is when there is a not at the front, and literals within brackets.
+            
+            
+        }
 
         return null;
     }
@@ -117,6 +122,7 @@ public class ExpToCnf{
 
 
     public static String PropositionalOperator(String expression, int index){
+
         if(index < expression.length() - 4){
             if(expression.substring(index, index + 3).equals("<->")){
                 return "<->";
