@@ -23,13 +23,12 @@ public class ExpToCnf{
         System.out.println(expFile_Contents);
         System.out.println("");
 
-        System.out.println(getCnf(expFile_Contents));        
+        System.out.println("Result is: " + getCnf(expFile_Contents));        
     }
 
     public static String getCnf(String expression){
         System.out.println("\nCurrent expression is: " + expression);
 
-        String result = "";
         int openBrackets = 0;
         int closedBrackets = 0;
 
@@ -48,49 +47,56 @@ public class ExpToCnf{
             String propOp = PropositionalOperator(expression, i);
             //System.out.println(propOp);
 
-            if(propOp != null){
-                if(openBrackets == closedBrackets){
+            if(openBrackets == closedBrackets){
+                if(propOp != null){
                     System.out.println("found PropositionalOperator at index: " + i);
                     String left = expression.substring(0, i);
-                    String right = expression.substring(i + propOp.length(), expression.length() - 1);
-                    result = Convert(left, right, propOp);
-                    break;
+                    String right = expression.substring(i + propOp.length(), expression.length());
+                    return Convert(left, right, propOp);
                 }
+            }
+            else{
+                //Do rules 1, 2 and 3 here
             }
 
 
         }
 
-        return result;
+        return null;
     }
 
     public static String Convert(String left, String right, String operator){
+        String result = "";
+
         left = left.trim();
         right = right.trim();
         operator = operator.trim();
 
 
         //TODO: does this bracket handling need to be more robust
-        if(left.charAt(0) == '(' && left.charAt(left.length() -1) == ')'){
+        if(left.charAt(0) == '(' && left.charAt(left.length() - 1) == ')'){
             left = left.substring(1, left.length());
         }
 
-        if(right.charAt(0) == '(' && right.charAt(right.length() -1) == ')'){
+        if(right.charAt(0) == '(' && right.charAt(right.length() - 1) == ')'){
             right = right.substring(1, right.length());
         }
 
         System.out.println("Left: " + left);
         System.out.println("Right: " + right);
-        System.out.println("Operator:" + operator);
+        System.out.println(right.charAt(0) + " : " + right.charAt(right.length() -1 ));
+        System.out.println("Operator: " + operator);
 
         if(operator.equals("<->")){
-            getCnf("(" + left + " ^ " + right + ")" + " v " + "(~" + left + " ^ " + "~" + right + ")");
+            result = getCnf("(" + left + " ^ " + right + ")" + " v " + "(~" + left + " ^ " + "~" + right + ")");
         }
-        else if(operator.equals("v")){
-
+        else if(operator.equals("v") || operator.equals("^")){
+            result = getCnf(left);
+            result += " " + operator + " ";
+            result += getCnf(right);
         }
 
-        return "fart";
+        return result;
     }
 
 
@@ -103,6 +109,10 @@ public class ExpToCnf{
 
         if(expression.substring(index, index + 1).equals("v")){
             return "v";
+        }
+
+        if(expression.substring(index, index + 1).equals("^")){
+            return "^";
         }
 
 
