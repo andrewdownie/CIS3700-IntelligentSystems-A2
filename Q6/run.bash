@@ -1,2 +1,2 @@
-#!bin/bash
-java ExpToCnf ExpFile CnfFile
+#!/bin/bash
+java ExpToCnf ExpFile CnfFile;
