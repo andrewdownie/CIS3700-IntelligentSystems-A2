@@ -3,7 +3,7 @@ import java.nio.file.Paths;
 
 public class ExpToCnf{
     public static void main(String[] args){
-        System.out.println("Starting program ExpToCnf ----");
+        System.out.println("\n\t---- Starting program ExpToCnf ----\n");
 
 
         String expFile_Contents = "", cnfFile_Contents = "";
@@ -26,7 +26,10 @@ public class ExpToCnf{
             System.out.println("Error opening cnf file: " + cnfFile_Path);
         }
 
-
-       System.out.println(expFile_Contents);
+        System.out.println("\n\t---- ExpFile contents ----");
+        System.out.println(expFile_Contents);
+        
+        System.out.println("\n\t---- CnfFile contents ----");
+        System.out.println(cnfFile_Contents);
     }
 }
