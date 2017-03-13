@@ -1,3 +1,2 @@
 #!/bin/bash
-javac ExpToCnf.java 
-java ExpToCnf
+javac ExpToCnf.java;
