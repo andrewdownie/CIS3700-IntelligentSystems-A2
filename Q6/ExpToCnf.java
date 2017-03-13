@@ -31,11 +31,25 @@ public class ExpToCnf{
 
         int openBrackets = 0;
         int closedBrackets = 0;
-
+        
+        ///
+        /// Rule 1. If s is a literal, return s
+        ///
         if(IsLiteral(expression)){
             return expression;
         }
 
+        ///
+        /// Rule 2: a, b, c
+        ///
+        if(expression.charAt(0) == '~'){
+            System.out.println("Expression starts with ~");
+            
+        }
+
+        ///
+        /// Rule 3,4, and 5
+        ///
         for(int i = 0; i < expression.length(); i++){
             if(expression.charAt(i) == '('){
                 openBrackets++; 
@@ -55,12 +69,10 @@ public class ExpToCnf{
                     return Convert(left, right, propOp);
                 }
             }
-            else{
-                //Do rules 1, 2 and 3 here
-            }
 
 
         }
+
 
         return null;
     }
@@ -74,17 +86,21 @@ public class ExpToCnf{
 
 
         //TODO: does this bracket handling need to be more robust
-        if(left.charAt(0) == '(' && left.charAt(left.length() - 1) == ')'){
-            left = left.substring(1, left.length());
+        if(left.charAt(0) == '('){
+            if(left.charAt(left.length() - 1) == ')'){
+                left = left.substring(1, left.length() - 1);
+            }
         }
 
-        if(right.charAt(0) == '(' && right.charAt(right.length() - 1) == ')'){
-            right = right.substring(1, right.length());
+        if(right.charAt(0) == '('){
+            if(right.charAt(right.length() - 1) == ')'){
+                right = right.substring(1, right.length() - 1);
+            }
         }
+
 
         System.out.println("Left: " + left);
         System.out.println("Right: " + right);
-        System.out.println(right.charAt(0) + " : " + right.charAt(right.length() -1 ));
         System.out.println("Operator: " + operator);
 
         if(operator.equals("<->")){
