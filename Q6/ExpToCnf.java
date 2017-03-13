@@ -27,11 +27,15 @@ public class ExpToCnf{
     }
 
     public static String getCnf(String expression){
-        System.out.println("Current expression is: " + expression);
+        System.out.println("\nCurrent expression is: " + expression);
 
         String result = "";
         int openBrackets = 0;
         int closedBrackets = 0;
+
+        if(IsLiteral(expression)){
+            return expression;
+        }
 
         for(int i = 0; i < expression.length(); i++){
             if(expression.charAt(i) == '('){
@@ -75,12 +79,15 @@ public class ExpToCnf{
             right = right.substring(1, right.length());
         }
 
-        System.out.println(left);
-        System.out.println(right);
-        System.out.println(operator);
+        System.out.println("Left: " + left);
+        System.out.println("Right: " + right);
+        System.out.println("Operator:" + operator);
 
-        if(operator == "<->"){
+        if(operator.equals("<->")){
             getCnf("(" + left + " ^ " + right + ")" + " v " + "(~" + left + " ^ " + "~" + right + ")");
+        }
+        else if(operator.equals("v")){
+
         }
 
         return "fart";
@@ -101,6 +108,12 @@ public class ExpToCnf{
 
 
         return null;
+    }
+
+
+    public static boolean IsLiteral(String literal){
+        //This function defines a literal as being a string without any spaces in it
+        return literal.length() == literal.replaceAll(" ", "").length();
     }
 
 }
