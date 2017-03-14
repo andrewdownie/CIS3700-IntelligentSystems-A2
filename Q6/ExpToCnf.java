@@ -12,6 +12,8 @@ public class ExpToCnf{
         expFile_Path = args[0];
         cnfFile_Path = args[1];
 
+        ///
+        /// Read teh ExpFile in
         try{
             expFile_Contents = new String(Files.readAllBytes(Paths.get(expFile_Path)));
         }
@@ -19,10 +21,16 @@ public class ExpToCnf{
             System.out.println("Error opening exp file: " + expFile_Path);
         }
 
+
+        ///
+        /// Print the contents of ExpFile for human verification
         System.out.println("\n\t---- ExpFile contents ----");
         System.out.println(expFile_Contents);
         System.out.println("");
 
+        ///
+        /// Run the getCnf algorithm
+        ///
         System.out.println("Result is: " + getCnf(expFile_Contents));        
     }
 
@@ -45,7 +53,7 @@ public class ExpToCnf{
         /// Rule 1. If s is a literal, return s
         ///
         if(IsLiteral(expression)){
-            System.out.println("\tReturn: " + expression);
+            System.out.println("\t(L)Return: " + expression);
             return expression;
         }
 
@@ -62,23 +70,20 @@ public class ExpToCnf{
                         return doubleNegative.trim().substring(1, doubleNegative.length());
                     }
                 }
-
-            //this is when there is a not at the front, and literals within brackets.
             }
         }
 
 
 
-        boolean applyDemorgans = false;
         ///
         /// Rule 2: b, c
         ///
+        boolean applyDemorgans = false;
         if(expression.charAt(0) == '~'){
             if(expression.charAt(1) == '('){
-                //System.out.println("Apply demorgans");
                 applyDemorgans = true; 
                 expression = expression.substring(2, expression.length() - 1);
-                System.out.println("Convert: " + expression);
+                //System.out.println("(D)Convert: " + expression);
             }
         }
 
@@ -96,12 +101,10 @@ public class ExpToCnf{
             }
 
             String propOp = PropositionalOperator(expression, i);
-            //System.out.println(propOp);
 
             if(openBrackets == closedBrackets){
                 if(propOp != null){
 
-                    //System.out.println("found PropositionalOperator at index: " + i);
                     String left = expression.substring(0, i);
                     String right = expression.substring(i + propOp.length(), expression.length());
 
@@ -115,10 +118,11 @@ public class ExpToCnf{
 
                         left = "~" + left.trim();
                         right = "~" + right.trim();
+
                     }
 
 
-                    result = Convert(left, right, propOp);
+                    result = Convert(left, right, propOp, applyDemorgans);
                 }
             }
 
@@ -126,6 +130,9 @@ public class ExpToCnf{
 
         }
 
+        ///
+        /// If we got something new, then return the result
+        ///
         if(!result.equals(expression)){
             //System.out.println("Result and expression were differnt");
             System.out.println("\tReturn: " + expression);
@@ -141,7 +148,7 @@ public class ExpToCnf{
 
 
 
-    public static String Convert(String left, String right, String operator){
+    public static String Convert(String left, String right, String operator, boolean applyDemorgans){
         String result = "";
 
         left = left.trim();
@@ -149,7 +156,9 @@ public class ExpToCnf{
         operator = operator.trim();
 
 
-        //TODO: does this bracket handling need to be more robust
+        ///
+        /// Remove the outermost brackets
+        ///
         if(left.charAt(0) == '('){
             if(left.charAt(left.length() - 1) == ')'){
                 left = left.substring(1, left.length() - 1);
@@ -162,6 +171,10 @@ public class ExpToCnf{
             }
         }
 
+
+        ///
+        /// Remove double ~~
+        ///
         for(int i = 0; i < left.length() - 1; i++){
             if(left.charAt(i) == '~' && left.charAt(i + 1) == '~'){
                 left = left.substring(0, i) + left.substring(i + 2, left.length());
@@ -175,10 +188,11 @@ public class ExpToCnf{
         }
 
 
-        //System.out.println("Left: " + left);
-        //System.out.println("Right: " + right);
-        //System.out.println("Operator: " + operator);
 
+
+        ///
+        /// Check what the current operator is
+        ///
         if(operator.equals("<->")){
             if(!IsLiteral(left)){
                 left = "(" + left + ")"; 
@@ -218,6 +232,9 @@ public class ExpToCnf{
 
         }
 
+        if(applyDemorgans){
+            System.out.println("Convert: " + result);
+        }
         return result;
     }
 
@@ -230,7 +247,7 @@ public class ExpToCnf{
 
         if(index < expression.length() - 4){
             if(expression.substring(index, index + 3).equals("<->")){
-                return "<->";
+                    return "<->";
             }    
         }
 
