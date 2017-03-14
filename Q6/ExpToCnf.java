@@ -180,6 +180,13 @@ public class ExpToCnf{
         System.out.println("Operator: " + operator);
 
         if(operator.equals("<->")){
+            if(!IsLiteral(left)){
+                left = "(" + left + ")"; 
+            }
+            if(!IsLiteral(right)){
+                right = "(" + right + ")";
+            }
+
             result = getCnf("(" + left + " ^ " + right + ")" + " v " + "(~" + left + " ^ " + "~" + right + ")");
         }
         else if(operator.equals("v") || operator.equals("^")){
