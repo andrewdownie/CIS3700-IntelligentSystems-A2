@@ -83,7 +83,7 @@ public class ExpToCnf{
             if(expression.charAt(1) == '('){
                 applyDemorgans = true; 
                 expression = expression.substring(2, expression.length() - 1);
-                //System.out.println("(D)Convert: " + expression);
+                //System.out.println("Apply demorgans");
             }
         }
 
@@ -122,6 +122,7 @@ public class ExpToCnf{
                     }
 
 
+                    //System.out.println("Convert the above demorgans");
                     result = Convert(left, right, propOp, applyDemorgans);
                 }
             }
