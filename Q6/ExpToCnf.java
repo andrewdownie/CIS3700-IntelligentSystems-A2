@@ -78,6 +78,7 @@ public class ExpToCnf{
                 //System.out.println("Apply demorgans");
                 applyDemorgans = true; 
                 expression = expression.substring(2, expression.length() - 1);
+                System.out.println("Convert: " + expression);
             }
         }
 
@@ -127,6 +128,7 @@ public class ExpToCnf{
 
         if(!result.equals(expression)){
             //System.out.println("Result and expression were differnt");
+            System.out.println("\tReturn: " + expression);
             return result;///////////////////////
         }
 
