@@ -189,10 +189,13 @@ public class ExpToCnf{
 
             result = getCnf("(" + left + " ^ " + right + ")" + " v " + "(~" + left + " ^ " + "~" + right + ")");
         }
-        else if(operator.equals("v") || operator.equals("^")){
+        else if(operator.equals("^")){
             result = "(" + getCnf(left);
             result += " " + operator + " ";
             result += getCnf(right) + ")";
+        }
+        else if(operator.equals("v")){
+            //Do rule six here
         }
 
         return result;
