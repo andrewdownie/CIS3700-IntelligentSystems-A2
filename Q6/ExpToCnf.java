@@ -114,8 +114,8 @@ public class ExpToCnf{
                             propOp = "^";
                         }
 
-                        left = "~" + left;
-                        right = "~" + right;
+                        left = "~" + left.trim();
+                        right = "~" + right.trim();
                     }
 
 
@@ -159,6 +159,18 @@ public class ExpToCnf{
         if(right.charAt(0) == '('){
             if(right.charAt(right.length() - 1) == ')'){
                 right = right.substring(1, right.length() - 1);
+            }
+        }
+
+        for(int i = 0; i < left.length() - 1; i++){
+            if(left.charAt(i) == '~' && left.charAt(i + 1) == '~'){
+                left = left.substring(0, i) + left.substring(i + 2, left.length());
+            }
+        }
+
+        for(int i = 0; i < right.length() - 1; i++){
+            if(right.charAt(i) == '~' && right.charAt(i + 1) == '~'){
+                right = right.substring(0, i) + right.substring(i + 2, right.length());
             }
         }
 
