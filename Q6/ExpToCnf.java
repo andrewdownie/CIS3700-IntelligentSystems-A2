@@ -106,10 +106,10 @@ public class ExpToCnf{
                     String right = expression.substring(i + propOp.length(), expression.length());
 
                     if(applyDemorgans){
-                        if(propOp == "^"){
+                        if(propOp.equals("^")){
                             propOp = "v";
                         }
-                        else if(propOp == "v"){
+                        else if(propOp.equals("v")){
                             propOp = "^";
                         }
 
