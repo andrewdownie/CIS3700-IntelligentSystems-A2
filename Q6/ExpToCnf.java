@@ -57,14 +57,11 @@ public class ExpToCnf{
         //if(expression.substring(0, 3).equals("~(~")){
         if(expression.charAt(0) == '~'){
             if(expression.charAt(1) == '('){
-                String demorgans = expression.substring(2, expression.length() - 1);
-                System.out.println("Demorgans is: " + demorgans);
+                String doubleNegative = expression.substring(2, expression.length() - 1);
                 
-                if(IsLiteral(demorgans)){
-                    System.out.println("Demorgans is literal");
-                    if(expression.charAt(0) == '~'){
-                        System.out.println("Apply rule 2s");
-                        return demorgans.trim().substring(1, demorgans.length());
+                if(IsLiteral(doubleNegative)){
+                    if(doubleNegative.charAt(0) == '~'){
+                        return doubleNegative.trim().substring(1, doubleNegative.length());
                     }
                 }
 
@@ -104,6 +101,11 @@ public class ExpToCnf{
             return result;///////////////////////
         }
 
+        if(expression.charAt(0) == '~'){
+            if(expression.charAt(1) == '('){
+                System.out.println("Apply demorgans");
+            }
+        }
 
         return null;
     }
