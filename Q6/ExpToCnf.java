@@ -69,6 +69,22 @@ public class ExpToCnf{
             }
         }
 
+
+
+        boolean applyDemorgans = false;
+        ///
+        /// Rule 2: b, c
+        ///
+        if(expression.charAt(0) == '~'){
+            if(expression.charAt(1) == '('){
+                System.out.println("Apply demorgans");
+                applyDemorgans = true; 
+                expression = expression.substring(2, expression.length() - 1);
+            }
+        }
+
+
+
         ///
         /// Rule 3,4, and 5
         ///
@@ -85,9 +101,24 @@ public class ExpToCnf{
 
             if(openBrackets == closedBrackets){
                 if(propOp != null){
+
                     System.out.println("found PropositionalOperator at index: " + i);
                     String left = expression.substring(0, i);
                     String right = expression.substring(i + propOp.length(), expression.length());
+
+                    if(applyDemorgans){
+                        if(propOp == "^"){
+                            propOp = "v";
+                        }
+                        else if(propOp == "v"){
+                            propOp = "^";
+                        }
+
+                        left = "~" + left;
+                        right = "~" + right;
+                    }
+
+
                     result = Convert(left, right, propOp);
                 }
             }
@@ -101,11 +132,7 @@ public class ExpToCnf{
             return result;///////////////////////
         }
 
-        if(expression.charAt(0) == '~'){
-            if(expression.charAt(1) == '('){
-                System.out.println("Apply demorgans");
-            }
-        }
+
 
         return null;
     }
