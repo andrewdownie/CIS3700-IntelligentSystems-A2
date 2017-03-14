@@ -196,6 +196,26 @@ public class ExpToCnf{
         }
         else if(operator.equals("v")){
             //Do rule six here
+            // send left and right to getCnf
+            // split left and right by and's 
+            // cross product left and right
+
+
+            //how do you perform the cross product????
+            String resultLeft = getCnf(left);
+            String resultRight = getCnf(right);
+
+            String[] leftSplit = resultLeft.split("^");
+            String[] rightSplit = resultRight.split("^");
+
+            result = "";
+
+            for(int i = 0; i < leftSplit.length; i++){
+                for(int j = 0; j < rightSplit.length; j++){
+                    result += "(" + leftSplit[i] + " v " + rightSplit[j] + ")";
+                }
+            }
+
         }
 
         return result;
