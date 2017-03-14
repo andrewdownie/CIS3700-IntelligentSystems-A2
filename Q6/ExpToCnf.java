@@ -26,19 +26,51 @@ public class ExpToCnf{
         System.out.println("Result is: " + getCnf(expFile_Contents));        
     }
 
+
+
+
+
+
     public static String getCnf(String expression){
         System.out.println("\n\nCurrent expression is: " + expression);
 
+        String result = "";
+
         int openBrackets = 0;
         int closedBrackets = 0;
-        
+
+        expression = expression.trim(); 
+
         ///
         /// Rule 1. If s is a literal, return s
         ///
         if(IsLiteral(expression)){
+            System.out.println("expression was a literal");
             return expression;
         }
 
+
+        ///
+        /// Rule 2: a
+        ///
+        //System.out.println(expression.substring(0, 3));
+        //if(expression.substring(0, 3).equals("~(~")){
+        if(expression.charAt(0) == '~'){
+            if(expression.charAt(1) == '('){
+                String demorgans = expression.substring(2, expression.length() - 1);
+                System.out.println("Demorgans is: " + demorgans);
+                
+                if(IsLiteral(demorgans)){
+                    System.out.println("Demorgans is literal");
+                    if(expression.charAt(0) == '~'){
+                        System.out.println("Apply rule 2s");
+                        return demorgans.trim().substring(1, demorgans.length());
+                    }
+                }
+
+            //this is when there is a not at the front, and literals within brackets.
+            }
+        }
 
         ///
         /// Rule 3,4, and 5
@@ -59,28 +91,26 @@ public class ExpToCnf{
                     System.out.println("found PropositionalOperator at index: " + i);
                     String left = expression.substring(0, i);
                     String right = expression.substring(i + propOp.length(), expression.length());
-                    return Convert(left, right, propOp);
+                    result = Convert(left, right, propOp);
                 }
             }
 
 
+
         }
 
-        ///
-        /// Rule 2: a
-        ///
-        //System.out.println(expression.substring(0, 3));
-        //if(expression.substring(0, 3).equals("~(~")){
-        if(expression.charAt(0) == '~' && expression.charAt(1) == '(' && expression.charAt(2) == '~'){
-            System.out.println("Apply rule 2s");
-            return expression.substring(2, expression.length() - 1);
-            //this is when there is a not at the front, and literals within brackets.
-            
-            
+        if(!result.equals(expression)){
+            System.out.println("Result and expression were differnt");
+            return result;///////////////////////
         }
+
 
         return null;
     }
+
+
+
+
 
     public static String Convert(String left, String right, String operator){
         String result = "";
@@ -112,13 +142,17 @@ public class ExpToCnf{
             result = getCnf("(" + left + " ^ " + right + ")" + " v " + "(~" + left + " ^ " + "~" + right + ")");
         }
         else if(operator.equals("v") || operator.equals("^")){
-            result = getCnf(left);
+            result = "(" + getCnf(left);
             result += " " + operator + " ";
-            result += getCnf(right);
+            result += getCnf(right) + ")";
         }
 
         return result;
     }
+
+
+
+
 
 
     public static String PropositionalOperator(String expression, int index){
@@ -143,9 +177,16 @@ public class ExpToCnf{
     }
 
 
+
+
+
     public static boolean IsLiteral(String literal){
         //This function defines a literal as being a string without any spaces in it
-        return literal.length() == literal.replaceAll(" ", "").length();
+        boolean noSpaces = literal.length() == literal.replaceAll(" ", "").length();
+        boolean openingBrackets = literal.contains(Character.toString('('));
+        boolean closingBrackets = literal.contains(Character.toString(')'));
+        
+        return noSpaces && !openingBrackets && !closingBrackets;
     }
 
 }
