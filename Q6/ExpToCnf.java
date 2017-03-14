@@ -32,7 +32,7 @@ public class ExpToCnf{
 
 
     public static String getCnf(String expression){
-        System.out.println("\n\nCurrent expression is: " + expression);
+        System.out.println("Convert: " + expression);
 
         String result = "";
 
@@ -45,7 +45,7 @@ public class ExpToCnf{
         /// Rule 1. If s is a literal, return s
         ///
         if(IsLiteral(expression)){
-            System.out.println("expression was a literal");
+            System.out.println("\tReturn: " + expression);
             return expression;
         }
 
@@ -53,8 +53,6 @@ public class ExpToCnf{
         ///
         /// Rule 2: a
         ///
-        //System.out.println(expression.substring(0, 3));
-        //if(expression.substring(0, 3).equals("~(~")){
         if(expression.charAt(0) == '~'){
             if(expression.charAt(1) == '('){
                 String doubleNegative = expression.substring(2, expression.length() - 1);
@@ -77,7 +75,7 @@ public class ExpToCnf{
         ///
         if(expression.charAt(0) == '~'){
             if(expression.charAt(1) == '('){
-                System.out.println("Apply demorgans");
+                //System.out.println("Apply demorgans");
                 applyDemorgans = true; 
                 expression = expression.substring(2, expression.length() - 1);
             }
@@ -102,7 +100,7 @@ public class ExpToCnf{
             if(openBrackets == closedBrackets){
                 if(propOp != null){
 
-                    System.out.println("found PropositionalOperator at index: " + i);
+                    //System.out.println("found PropositionalOperator at index: " + i);
                     String left = expression.substring(0, i);
                     String right = expression.substring(i + propOp.length(), expression.length());
 
@@ -128,7 +126,7 @@ public class ExpToCnf{
         }
 
         if(!result.equals(expression)){
-            System.out.println("Result and expression were differnt");
+            //System.out.println("Result and expression were differnt");
             return result;///////////////////////
         }
 
@@ -175,9 +173,9 @@ public class ExpToCnf{
         }
 
 
-        System.out.println("Left: " + left);
-        System.out.println("Right: " + right);
-        System.out.println("Operator: " + operator);
+        //System.out.println("Left: " + left);
+        //System.out.println("Right: " + right);
+        //System.out.println("Operator: " + operator);
 
         if(operator.equals("<->")){
             if(!IsLiteral(left)){
