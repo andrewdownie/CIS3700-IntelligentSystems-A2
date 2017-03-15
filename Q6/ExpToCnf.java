@@ -77,8 +77,19 @@ public class ExpToCnf{
             }
         }
 
+        String result = ""; 
 
-        return ""; 
+
+        for(int i = 0; i < splitCnf.size(); i++){
+            result += splitCnf.get(i).trim();
+
+            if(i < splitCnf.size() - 1){
+                result += " ^ ";
+            }
+        }
+
+        System.out.println(result);
+        return result; 
     }
 
 
