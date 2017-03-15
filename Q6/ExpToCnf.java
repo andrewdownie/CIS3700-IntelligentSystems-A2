@@ -47,8 +47,7 @@ public class ExpToCnf{
         //split by ands
         //go through each symbol, and check if its opposite exists         
 
-        List<String> splitCnf = Arrays.asList(cnfExpression.split("\\^"));
-        List<String> toRemove = new ArrayList<String>();
+        List<String> splitCnf = new ArrayList<String>(Arrays.asList(cnfExpression.split("\\^")));
         String[] curOr;
 
         //for (String currentItem: splitCnf ) {
@@ -68,8 +67,7 @@ public class ExpToCnf{
                         //System.out.println("Cur or: " + curOr[j] + " : " + curOr[k]);
                         if(("~" + curOr[j]).trim().equals(curOr[k].trim())){
 
-                            toRemove.add(currentItem);
-                            //iterator.remove();
+                            iterator.remove();
 
                         }
                     }
