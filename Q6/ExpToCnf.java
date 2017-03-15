@@ -93,7 +93,7 @@ public class ExpToCnf{
                 closedBrackets++;
             }
 
-            String propOp = PropositionalOperator(expression, i);
+            String propOp = FindPropositionalOperator(expression, i);
 
             if(openBrackets == closedBrackets){
                 if(propOp != null){
@@ -268,19 +268,18 @@ public class ExpToCnf{
 
 
 
-    public static String PropositionalOperator(String expression, int index){
+    public static String FindPropositionalOperator(String expression, int index){
 
-        if(index < expression.length() - 4){
-            if(expression.substring(index, index + 3).equals("<->")){
-                    return "<->";
-            }    
+        if(index < expression.length() - 4 && expression.substring(index, index + 3).equals("<->")){
+            return "<->";
         }
-
-        if(expression.substring(index, index + 1).equals("v")){
+        else if(index < expression.length() - 3 && expression.substring(index, index + 2).equals("->") && !expression.substring(index -1, index).equals("<")){
+            return "->";
+        }
+        else if(expression.substring(index, index + 1).equals("v")){
             return "v";
         }
-
-        if(expression.substring(index, index + 1).equals("^")){
+        else if(expression.substring(index, index + 1).equals("^")){
             return "^";
         }
 
