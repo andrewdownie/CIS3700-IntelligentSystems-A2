@@ -53,7 +53,7 @@ public class ExpToCnf{
         /// Rule 1. If s is a literal, return s
         ///
         if(IsLiteral(expression)){
-            System.out.println("\t(L)Return: " + expression);
+            System.out.println("\tLiteral: " + expression);
             return expression;
         }
 
@@ -90,7 +90,7 @@ public class ExpToCnf{
 
 
         ///
-        /// Rule 3,4, and 5
+        /// Rule 3,4,5 and 6
         ///
         for(int i = 0; i < expression.length(); i++){
             if(expression.charAt(i) == '('){
@@ -270,7 +270,6 @@ public class ExpToCnf{
 
 
     public static boolean IsLiteral(String literal){
-        //This function defines a literal as being a string without any spaces in it
         boolean noSpaces = literal.length() == literal.replaceAll(" ", "").length();
         boolean openingBrackets = literal.contains(Character.toString('('));
         boolean closingBrackets = literal.contains(Character.toString(')'));
