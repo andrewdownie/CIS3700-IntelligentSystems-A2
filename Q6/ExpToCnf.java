@@ -249,7 +249,7 @@ public class ExpToCnf{
                     result += "(" + curLeft + " v " + curRight + ")";
                     System.out.println("RESULT: " + curLeft);
 
-                    if(j < rightSplit.length - 1 && i < leftSplit.length - 1){
+                    if(i + j < rightSplit.length + leftSplit.length - 2){
                         result += " ^ ";
                     }
                 }
