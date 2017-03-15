@@ -1,5 +1,8 @@
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.*; 
+import java.util.List; 
+import java.util.Arrays;
 
 public class ExpToCnf{
     public static void main(String[] args){
@@ -31,11 +34,46 @@ public class ExpToCnf{
         ///
         /// Run the getCnf algorithm
         ///
-        System.out.println("Result is: " + getCnf(expFile_Contents));        
+        String cnfResult = getCnf(expFile_Contents);
+
+        System.out.println("Result is: " + cnfResult);   
+
+        CleanTautologies(cnfResult);
+
     }
 
 
+    public static String CleanTautologies(String cnfExpression){
+        //split by ands
+        //go through each symbol, and check if its opposite exists         
 
+        String[] splitCnf = cnfExpression.split("\\^");
+        String[] curOr;
+
+        for(int i = 0; i < splitCnf.length; i++){
+            String tempOr = splitCnf[i].replace("(","");
+            tempOr = tempOr.replace(")", "");
+            tempOr = tempOr.replace(" ", "");
+            curOr = tempOr.split("v");
+
+            for(int j = 0; j < curOr.length; j++){
+                //System.out.println("WAT: " + curOr[j]);
+                for(int k = 0; k < curOr.length; k++){
+
+                    if(j != k){
+                        System.out.println("Cur or: " + curOr[j] + " : " + curOr[k]);
+                        if(("~" + curOr[j]).trim().equals(curOr[k].trim())){
+                            System.out.println("Tautology found");
+                        }
+                    }
+
+                }
+                
+            }
+        }
+
+        return ""; 
+    }
 
 
 
@@ -247,7 +285,6 @@ public class ExpToCnf{
                     curRight = curRight.trim();
 
                     result += "(" + curLeft + " v " + curRight + ")";
-                    System.out.println("RESULT: " + curLeft);
 
                     if(i + j < rightSplit.length + leftSplit.length - 2){
                         result += " ^ ";
