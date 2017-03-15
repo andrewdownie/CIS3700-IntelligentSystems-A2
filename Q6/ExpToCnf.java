@@ -49,13 +49,6 @@ public class ExpToCnf{
 
         expression = expression.trim(); 
 
-        ///
-        /// Rule 1. If s is a literal, return s
-        ///
-        if(IsLiteral(expression)){
-            System.out.println("\tLiteral: " + expression);
-            return expression;
-        }
 
 
         ///
@@ -129,6 +122,14 @@ public class ExpToCnf{
 
 
 
+        }
+
+        ///
+        /// Rule 1. If s is a literal, return s
+        ///
+        if(IsLiteral(expression)){
+            System.out.println("\tLiteral: " + expression);
+            return expression;
         }
 
         ///
