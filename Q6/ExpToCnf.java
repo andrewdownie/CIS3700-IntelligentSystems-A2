@@ -48,10 +48,13 @@ public class ExpToCnf{
         //go through each symbol, and check if its opposite exists         
 
         List<String> splitCnf = Arrays.asList(cnfExpression.split("\\^"));
+        List<String> toRemove = new ArrayList<String>();
         String[] curOr;
 
-        for (Iterator<String> iter = splitCnf.listIterator(); iter.hasNext(); ) {
-            String tempOr = iter.next().replace("(","");
+        //for (String currentItem: splitCnf ) {
+        for (Iterator<String> iterator = splitCnf.iterator(); iterator.hasNext();) {
+            String currentItem = iterator.next();
+            String tempOr = currentItem.replace("(","");
             tempOr = tempOr.replace(")", "");
             tempOr = tempOr.replace(" ", "");
             curOr = tempOr.split("v");
@@ -61,10 +64,12 @@ public class ExpToCnf{
                 for(int k = 0; k < curOr.length; k++){
 
                     if(j != k){
-                        System.out.println("Cur or: " + curOr[j] + " : " + curOr[k]);
+                        //System.out.println("Cur or: " + curOr[j] + " : " + curOr[k]);
                         if(("~" + curOr[j]).trim().equals(curOr[k].trim())){
 
-                            System.out.println("Tautology found");
+                            toRemove.add(currentItem);
+                            iterator.remove(0);
+
                         }
                     }
 
@@ -72,6 +77,7 @@ public class ExpToCnf{
                 
             }
         }
+
 
         return ""; 
     }
