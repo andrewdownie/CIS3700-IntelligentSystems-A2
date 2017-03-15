@@ -225,14 +225,33 @@ public class ExpToCnf{
             String resultLeft = getCnf(left);
             String resultRight = getCnf(right);
 
-            String[] leftSplit = resultLeft.split("^");
-            String[] rightSplit = resultRight.split("^");
+            String[] leftSplit = resultLeft.split("\\^");
+            String[] rightSplit = resultRight.split("\\^");
+
+            String curLeft, curRight;
 
             result = "";
 
             for(int i = 0; i < leftSplit.length; i++){
                 for(int j = 0; j < rightSplit.length; j++){
-                    result += "(" + leftSplit[i] + " v " + rightSplit[j] + ")";
+
+                    curLeft = leftSplit[i];
+                    curRight = rightSplit[j];
+
+                    curLeft = curLeft.replace("(", "");
+                    curLeft = curLeft.replace(")", "");
+                    curRight = curRight.replace("(", "");
+                    curRight = curRight.replace(")", "");
+
+                    curLeft = curLeft.trim();
+                    curRight = curRight.trim();
+
+                    result += "(" + curLeft + " v " + curRight + ")";
+                    System.out.println("RESULT: " + curLeft);
+
+                    if(j < rightSplit.length - 1 && i < leftSplit.length - 1){
+                        result += " ^ ";
+                    }
                 }
             }
 
