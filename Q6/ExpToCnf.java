@@ -52,7 +52,8 @@ public class ExpToCnf{
         String[] curOr;
 
         //for (String currentItem: splitCnf ) {
-        for (Iterator<String> iterator = splitCnf.iterator(); iterator.hasNext();) {
+        Iterator<String> iterator = splitCnf.iterator();
+        while (iterator.hasNext()) {
             String currentItem = iterator.next();
             String tempOr = currentItem.replace("(","");
             tempOr = tempOr.replace(")", "");
@@ -68,7 +69,7 @@ public class ExpToCnf{
                         if(("~" + curOr[j]).trim().equals(curOr[k].trim())){
 
                             toRemove.add(currentItem);
-                            iterator.remove(0);
+                            //iterator.remove();
 
                         }
                     }
