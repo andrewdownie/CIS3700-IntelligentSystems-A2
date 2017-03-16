@@ -7,7 +7,7 @@ public class Clause{
 
     public List<String> literals;
 
-    public Clause(){
+    public Clause(String disjunction){
         literals = new LinkedList<String>(); 
     }
 

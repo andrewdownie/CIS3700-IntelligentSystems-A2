@@ -1,6 +1,8 @@
 import java.util.LinkedList;
 import java.util.*;
 import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class ClauseBase{
     // ClauseBase: It maintains a set of clauses and expresses conjunction of these clauses. It should contain
@@ -30,16 +32,34 @@ public class ClauseBase{
     }
 
     public void LoadQuery(String filePath){
-        //add query to both query var, and the list var
+       String rawClause = FileContents(filePath); 
+       Clause q = new Clause(rawClause.split("[\\r\\n]+")[0]);
+
+       query = q;
+       clauses.add(q);
+
     }
 
     public void LoadClauses(String filePath){
+        String rawClauses = FileContents(filePath);
+        String[] splitClauses = rawClauses.split("[\\r\\n]+");
 
+        for(String clause: splitClauses){
+            clauses.add(new Clause(clause));//TODO make teh constructor for clause rip the clause apart
+        }
     }
 
     private String FileContents(String filePath){
+        String fileContents = "";
 
-        return "this is scaffold oh FileContents(String)";
+        try{
+            fileContents = new String(Files.readAllBytes(Paths.get(filePath)));
+        }
+        catch(Exception e){
+            System.out.println("Error opening exp file: " + filePath);
+        }
+
+        return fileContents;
     }
 
     public void Resolve(){
