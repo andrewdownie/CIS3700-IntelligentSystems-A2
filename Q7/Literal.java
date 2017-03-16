@@ -25,5 +25,14 @@ public class Literal{
         return symbol;
     }
 
+    public boolean Compare(Literal other){
+        if(sign = other.sign){
+            if(symbol.equals(other.symbol)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }

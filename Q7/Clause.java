@@ -25,6 +25,30 @@ public class Clause{
         literals = new LinkedList<Literal>(); 
     }
 
+    public boolean HasAll(Clause other){
+        if(literals.size() < other.literals.size()){
+            return false;
+        }
+
+        boolean matchFound = false;
+
+        for(Literal l: literals){
+            for(Literal o: other.literals){
+
+                if(l.Compare(o)){
+                    matchFound = true;
+                } 
+
+            }
+            if(!matchFound){
+                return false;
+            }
+            matchFound = false;
+        }
+
+        return true;
+    }
+
 
     public void AddLiteral(String literal){
         literals.add(new Literal(literal));

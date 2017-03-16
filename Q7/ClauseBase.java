@@ -89,18 +89,43 @@ public class ClauseBase{
                 }
             }
 
-            if(clauses.containsAll(newClauses)){
+            ///
+            /// Need to do a deep compare here I think
+            ///
+            if(HasAll(clauses, newClauses)){
                 return false;
             }
+
             clauses.addAll(newClauses);
+            newClauses = new LinkedList<Clause>();
         }
     }
+
+    private boolean HasAll(List<Clause> container, List<Clause> containee){
+        boolean matchFound = false;
+        for(Clause c: container){
+            for(Clause d: containee){
+                if(c.HasAll(d)){
+                    matchFound = true;
+                    break;
+                }
+            }
+            if(!matchFound){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 
 
     private List<Clause> Resolve(Clause clause1, Clause clause2){
         System.out.println("1: " + clause1.GetDisjunction() + ", 2: " + clause2.GetDisjunction());
+        List<Clause> result = new LinkedList<Clause>();
+        result.add(new Clause("M"));
 
-        return null;
+        return result;
     }
 
 }
