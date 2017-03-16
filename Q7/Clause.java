@@ -5,28 +5,29 @@ import java.util.List;
 public class Clause{
     //Clause: It maintains a list of Literals in the clause and represents their disjunction
 
-    public List<String> literals;
+    public List<Literal> literals;
 
     public Clause(String disjunction){
-        literals = new LinkedList<String>(); 
+        literals = new LinkedList<Literal>(); 
 
         disjunction = disjunction.replace("(", "");
         disjunction = disjunction.replace(")", "");
 
         String[] _literals = disjunction.split("v");
 
+        boolean isPositive;
         for(String literal: _literals){
-            literals.add(literal);
+            literals.add(new Literal(literal));
         }
     }
 
     public Clause(){
-        literals = new LinkedList<String>(); 
+        literals = new LinkedList<Literal>(); 
     }
 
 
     public void AddLiteral(String literal){
-        literals.add(literal);
+        literals.add(new Literal(literal));
     }
 
 

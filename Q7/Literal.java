@@ -6,6 +6,17 @@ public class Literal{
     public String symbol;
 
 
+    public Literal(String literal){
+        sign = false;
+
+        if(literal.charAt(0) == '~'){
+            sign = true;
+            literal = literal.substring(1, literal.length());
+        }
+
+        symbol = literal;
+    }
+
     public String GetLiteralWithSign(){
         if(sign == true){
             return "~" + symbol;
