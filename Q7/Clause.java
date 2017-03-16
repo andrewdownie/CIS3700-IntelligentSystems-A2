@@ -25,15 +25,17 @@ public class Clause{
         literals = new LinkedList<Literal>(); 
     }
 
-    public boolean HasAll(Clause other){
-        if(literals.size() < other.literals.size()){
+    public boolean HasAllLiterals(Clause other){
+        //Figure out if this instance has all the same literals that other has
+        if(literals.size() >= other.literals.size()){
+            //System.out.println("HasAllLiterals current: " + literals.size() + ", " + other.literals.size());    
             return false;
         }
 
         boolean matchFound = false;
 
-        for(Literal l: literals){
-            for(Literal o: other.literals){
+        for(Literal o: other.literals){
+            for(Literal l: literals){
 
                 if(l.Compare(o)){
                     matchFound = true;
@@ -41,17 +43,14 @@ public class Clause{
 
             }
             if(!matchFound){
+                //System.out.println("No match on other: " + o.GetSymbolWithSign());
                 return false;
             }
             matchFound = false;
         }
 
+        //System.out.println("All literals matched");
         return true;
-    }
-
-
-    public void AddLiteral(String literal){
-        literals.add(new Literal(literal));
     }
 
 

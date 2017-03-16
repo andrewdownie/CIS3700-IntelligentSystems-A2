@@ -18,12 +18,16 @@ public class ClauseBase{
 
 
     public String GetConjunction(){
+        return Conjunctify(clauses);
+    }
+
+    private String Conjunctify(List<Clause> clauseList){
         String output = "";
 
-        for(int i = 0; i < clauses.size(); i++){
-            output += clauses.get(i).GetDisjunction();
+        for(int i = 0; i < clauseList.size(); i++){
+            output += clauseList.get(i).GetDisjunction();
 
-            if(i < clauses.size() - 1){
+            if(i < clauseList.size() - 1){
                 output +=  " ^ ";
             }
         }
@@ -90,29 +94,52 @@ public class ClauseBase{
             }
 
             ///
-            /// Need to do a deep compare here I think
-            ///
-            if(HasAll(clauses, newClauses)){
+            /// If there  is nothing new, return false <- TODO: this doesn't work 
+            ///     Why doesn't this work tho argggggggggggggggggg
+            if(HasAllClauses(clauses, newClauses)){
+                
                 return false;
             }
 
-            clauses.addAll(newClauses);
+            for(Clause c: clauses){
+                for(Clause d: newClauses){
+                    //System.out.println(c.GetDisjunction() + " <> " + d.GetDisjunction());
+                    
+                }
+            }
+
+            for(Clause newClause: newClauses){
+                clauses.add(newClause);
+            }
+
+            for(Clause c: clauses){
+                System.out.println("NEW: " + c.GetDisjunction());
+            }
             newClauses = new LinkedList<Clause>();
         }
     }
 
-    private boolean HasAll(List<Clause> container, List<Clause> containee){
+    private boolean HasAllClauses(List<Clause> container, List<Clause> containee){
+        /*System.out.println("Comparing: ");
+        System.out.println("\tContainer: " + Conjunctify(container));
+        System.out.println("\tContainee: " + Conjunctify(containee));*/
+
         boolean matchFound = false;
-        for(Clause c: container){
-            for(Clause d: containee){
-                if(c.HasAll(d)){
+        for(Clause d: containee){
+            for(Clause c: container){
+                //System.out.println(c.GetDisjunction() + " :: " + d.GetDisjunction());
+
+                if(c.HasAllLiterals(d)){
+                    
                     matchFound = true;
                     break;
                 }
             }
             if(!matchFound){
+                //System.out.println("No match found for: " + d.GetDisjunction());
                 return false;
             }
+            matchFound = false;
         }
 
         return true;
@@ -121,7 +148,7 @@ public class ClauseBase{
 
 
     private List<Clause> Resolve(Clause clause1, Clause clause2){
-        System.out.println("1: " + clause1.GetDisjunction() + ", 2: " + clause2.GetDisjunction());
+        //System.out.println("1: " + clause1.GetDisjunction() + ", 2: " + clause2.GetDisjunction());
         List<Clause> result = new LinkedList<Clause>();
         result.add(new Clause("M"));
 
