@@ -23,10 +23,10 @@ public class Clause{
     public String GetDisjunction(){
         String output = "";
 
-        for(int i = 0; i < literals.size() - 1; i++){
+        for(int i = 0; i < literals.size(); i++){
             output += literals.get(i);
 
-            if(i < literals.size() - 2){
+            if(i < literals.size() - 1){
                 output += " v ";
             }
         }
