@@ -18,7 +18,9 @@ public class Resolution{
         cb.LoadClauses(percept_path);
         cb.LoadQuery(query_path);
 
-        System.out.println(cb.GetConjunction());
+        //System.out.println(cb.GetConjunction());
+
+        cb.Resolution();
 
 
     }

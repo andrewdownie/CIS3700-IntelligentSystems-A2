@@ -62,8 +62,45 @@ public class ClauseBase{
         return fileContents;
     }
 
-    public void Resolve(){
-        //Magic?
+    public boolean Resolution(){
+        List<Clause> newClauses = new LinkedList<Clause>();
+        List<Clause> resolvents = new LinkedList<Clause>();
+        Clause clause1, clause2;
+
+
+        while(true){
+
+            ///
+            /// Perform cross product on the clause list
+            ///
+            for(int i = 0; i < clauses.size() - 1; i++){
+                clause1 = clauses.get(i);
+
+                for(int j = i; j < clauses.size(); j++){
+                    clause2 = clauses.get(j);
+
+                    resolvents = Resolve(clause1, clause2);
+
+                    if(resolvents == null){
+                        return true;
+                    }
+
+                    newClauses.addAll(resolvents);
+                }
+            }
+
+            if(clauses.containsAll(newClauses)){
+                return false;
+            }
+            clauses.addAll(newClauses);
+        }
+    }
+
+
+    private List<Clause> Resolve(Clause clause1, Clause clause2){
+        System.out.println("1: " + clause1.GetDisjunction() + ", 2: " + clause2.GetDisjunction());
+
+        return null;
     }
 
 }
