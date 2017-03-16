@@ -5,9 +5,6 @@ public class Literal{
     public boolean sign;
     public String symbol;
 
-    public static void TestLiteral(){
-        System.out.println("Test literal");
-    }
 
     public String GetLiteralWithSign(){
         if(sign == true){

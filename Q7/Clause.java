@@ -11,9 +11,6 @@ public class Clause{
         literals = new LinkedList<String>(); 
     }
 
-    public static void TestClause(){
-        System.out.println("Test clause");
-    }
 
     public void AddLiteral(String literal){
         literals.add(literal);

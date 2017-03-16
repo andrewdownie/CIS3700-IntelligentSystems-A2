@@ -14,9 +14,6 @@ public class ClauseBase{
         clauses = new LinkedList<Clause>();
     }
 
-    public static void TestClauseBase(){
-        System.out.println("Test clausebase");
-    }
 
     public String GetConjunction(){
         String output = "";
@@ -42,6 +39,7 @@ public class ClauseBase{
 
     private String FileContents(String filePath){
 
+        return "this is scaffold oh FileContents(String)";
     }
 
     public void Resolve(){

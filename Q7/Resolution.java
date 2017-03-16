@@ -7,10 +7,17 @@ import java.util.Arrays;
 public class Resolution{
 
     public static void main(String[] args){
-        System.out.println("This is resolution");
-        Clause.TestClause();
-        Literal.TestLiteral();
-        ClauseBase.TestClauseBase();
+        String kb_path, percept_path, query_path;
+
+        kb_path = args[0];
+        percept_path = args[1];
+        query_path = args[2];
+
+        ClauseBase cb = new ClauseBase();
+        cb.LoadClauses(kb_path);
+        cb.LoadClauses(percept_path);
+        cb.LoadQuery(query_path);
+
 
     }
 
