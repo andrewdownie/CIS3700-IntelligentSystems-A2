@@ -9,6 +9,19 @@ public class Clause{
 
     public Clause(String disjunction){
         literals = new LinkedList<String>(); 
+
+        disjunction = disjunction.replace("(", "");
+        disjunction = disjunction.replace(")", "");
+
+        String[] _literals = disjunction.split("v");
+
+        for(String literal: _literals){
+            literals.add(literal);
+        }
+    }
+
+    public Clause(){
+        literals = new LinkedList<String>(); 
     }
 
 
