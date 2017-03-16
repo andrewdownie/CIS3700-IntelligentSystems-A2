@@ -17,7 +17,7 @@ public class Literal{
         symbol = literal;
     }
 
-    public String GetLiteralWithSign(){
+    public String GetSymbolWithSign(){
         if(sign == true){
             return "~" + symbol;
         }

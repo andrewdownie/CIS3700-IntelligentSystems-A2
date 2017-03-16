@@ -21,7 +21,7 @@ public class ClauseBase{
         String output = "";
 
         for(int i = 0; i < clauses.size(); i++){
-            output += clauses.get(i);
+            output += clauses.get(i).GetDisjunction();
 
             if(i < clauses.size() - 1){
                 output +=  " ^ ";

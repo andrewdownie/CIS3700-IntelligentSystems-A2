@@ -35,12 +35,17 @@ public class Clause{
         String output = "";
 
         for(int i = 0; i < literals.size(); i++){
-            output += literals.get(i);
+            output += literals.get(i).GetSymbolWithSign();
 
             if(i < literals.size() - 1){
                 output += " v ";
             }
         }
+
+        if(output != ""){
+            output = "(" + output + ")";
+        }
+
         return output;
     }
 }
