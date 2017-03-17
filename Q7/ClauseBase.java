@@ -79,10 +79,12 @@ public class ClauseBase{
 
         int resolutionCount = 0;
 
+        System.out.println("\n---> Starting resolution algorithm <---");
+
         while(true){
             resolutionCount++;
 
-            System.out.println("Resolution round: " + resolutionCount);
+            System.out.println("\nResolution round: " + resolutionCount);
             System.out.println("\tClause count of clause base: " + clauses.size()); 
             System.out.println("\tClause count of (new): " + newClauses.size());
 
@@ -106,18 +108,12 @@ public class ClauseBase{
             }
 
             ///
-            /// If there  is nothing new, return false <- TODO: this doesn't work 
+            /// If there  is nothing new, return false  
             ///
-            if(HasAllClauses(clauses, newClauses)){
+            if(HasAllClauses(clauses, newClauses) || newClauses.size() > 10000){
                 return false;
             }
 
-            for(Clause c: clauses){
-                for(Clause d: newClauses){
-                    //System.out.println(c.GetDisjunction() + " <> " + d.GetDisjunction());
-                    
-                }
-            }
 
             for(Clause newClause: newClauses){
                 clauses.add(newClause);

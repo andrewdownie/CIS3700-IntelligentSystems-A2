@@ -18,9 +18,15 @@ public class Resolution{
         cb.LoadClauses(kb_path);
         cb.LoadQuery(query_path);
 
-        //System.out.println(cb.GetConjunction());
 
-        cb.Resolution();
+        boolean entails = cb.Resolution();
+
+        if(entails){
+            System.out.println("\nKB |= alpha");
+        }
+        else{
+            System.out.println("\nKB !|= alpha");
+        }
 
 
     }
