@@ -1,6 +1,4 @@
 public class Literal{
-    //Literal: It maintains a literal as a symbol and a sign. The symbol is a Java String. The sign is Boolean and
-    //         indicate whether the literal is positive or negative.
 
     public boolean sign;
     public String symbol;
@@ -22,7 +20,7 @@ public class Literal{
             return "~" + symbol.trim();
         }
 
-        return symbol;
+        return symbol.trim();
     }
 
     public boolean Compare(Literal other){

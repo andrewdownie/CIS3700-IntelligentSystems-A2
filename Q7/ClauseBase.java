@@ -5,9 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class ClauseBase{
-    // ClauseBase: It maintains a set of clauses and expresses conjunction of these clauses. It should contain
-    //             methods to load clauses from a file, to join two ClauseBases into one, and to perform resolution when the
-    //             clauses represent KB ∧ ¬α, where α is the query sentence
 
     public List<Clause> clauses;
     public Clause query;
@@ -89,7 +86,7 @@ public class ClauseBase{
             System.out.println("\tClause count of (new): " + newClauses.size());
 
             ///
-            /// Perform cross product on the clause list
+            /// Resolve each clause against everyother clause  
             ///
             for(int i = 0; i < clauses.size() - 1; i++){
                 clause1 = clauses.get(i);
@@ -114,7 +111,9 @@ public class ClauseBase{
                 return false;
             }
 
-
+            ///
+            /// If there was something new, add it, and iterate again
+            ///
             for(Clause newClause: newClauses){
                 clauses.add(newClause);
             }
@@ -124,14 +123,10 @@ public class ClauseBase{
     }
 
     private boolean HasAllClauses(List<Clause> container, List<Clause> containee){
-        /*System.out.println("Comparing: ");
-        System.out.println("\tContainer: " + Conjunctify(container));
-        System.out.println("\tContainee: " + Conjunctify(containee));*/
 
         boolean matchFound = false;
         for(Clause d: containee){
             for(Clause c: container){
-                //System.out.println(c.GetDisjunction() + " :: " + d.GetDisjunction());
 
                 if(c.HasAllLiterals(d)){
                     
@@ -140,7 +135,6 @@ public class ClauseBase{
                 }
             }
             if(!matchFound){
-                //System.out.println("No match found for: " + d.GetDisjunction());
                 return false;
             }
             matchFound = false;
@@ -152,12 +146,13 @@ public class ClauseBase{
 
 
     private List<Clause> Resolve(Clause clause1, Clause clause2){
-        //System.out.println("1: " + clause1.GetDisjunction() + ", 2: " + clause2.GetDisjunction());
         List<Literal> complimentList = new LinkedList<Literal>();
         List<Clause> result = new LinkedList<Clause>();
-        //result.add(new Clause("M"));
 
 
+        ///
+        ///  Check for complimentry literals, for every pair of complimentry literals found between clause1 and clause2
+        ///         create a new clause that is a bigger disjuction of the two clauses, but does not contain that complimentry pair
         for(Literal l1: clause1.literals){
             for(Literal l2: clause2.literals){
 

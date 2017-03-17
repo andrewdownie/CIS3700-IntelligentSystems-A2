@@ -3,7 +3,6 @@ import java.util.*;
 import java.util.List;
 
 public class Clause{
-    //Clause: It maintains a list of Literals in the clause and represents their disjunction
 
     public List<Literal> literals;
 
@@ -36,10 +35,11 @@ public class Clause{
         literals = new LinkedList<Literal>(); 
     }
 
+    ///
+    /// Check if two disjunctions hold the same set of literals
+    ///
     public boolean HasAllLiterals(Clause other){
-        //Figure out if this instance has all the same literals that other has
         if(literals.size() >= other.literals.size()){
-            //System.out.println("HasAllLiterals current: " + literals.size() + ", " + other.literals.size());    
             return false;
         }
 
@@ -54,7 +54,6 @@ public class Clause{
 
             }
             if(!matchFound){
-                //System.out.println("No match on other: " + o.GetSymbolWithSign());
                 return false;
             }
             matchFound = false;
