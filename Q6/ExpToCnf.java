@@ -56,20 +56,17 @@ public class ExpToCnf{
             System.out.println("Return: " + cnfResult);
             pw.println(cnfResult);
         }
+
         pw.close();
-        //write result to output file here
 
     }
 
 
     public static String CleanTautologies(String cnfExpression){
-        //split by ands
-        //go through each symbol, and check if its opposite exists         
 
         List<String> splitCnf = new ArrayList<String>(Arrays.asList(cnfExpression.split("\\^")));
         String[] curOr;
 
-        //for (String currentItem: splitCnf ) {
         Iterator<String> iterator = splitCnf.iterator();
         while (iterator.hasNext()) {
             String currentItem = iterator.next();
@@ -79,11 +76,9 @@ public class ExpToCnf{
             curOr = tempOr.split("v");
 
             for(int j = 0; j < curOr.length; j++){
-                //System.out.println("WAT: " + curOr[j]);
                 for(int k = 0; k < curOr.length; k++){
 
                     if(j != k){
-                        //System.out.println("Cur or: " + curOr[j] + " : " + curOr[k]);
                         if(("~" + curOr[j]).trim().equals(curOr[k].trim())){
 
                             iterator.remove();
@@ -107,7 +102,6 @@ public class ExpToCnf{
             }
         }
 
-        //System.out.println(result);
         return result; 
     }
 
@@ -150,7 +144,6 @@ public class ExpToCnf{
             if(expression.charAt(1) == '('){
                 applyDemorgans = true; 
                 expression = expression.substring(2, expression.length() - 1);
-                //System.out.println("Apply demorgans");
             }
         }
 
@@ -189,7 +182,6 @@ public class ExpToCnf{
                     }
 
 
-                    //System.out.println("Convert the above demorgans");
                     result = Convert(left, right, propOp, applyDemorgans);
                 }
             }
@@ -210,9 +202,8 @@ public class ExpToCnf{
         /// If we got something new, then return the result
         ///
         if(!result.equals(expression)){
-            //System.out.println("Result and expression were differnt");
             System.out.println("\tReturn: " + expression);
-            return result;///////////////////////
+            return result;
         }
 
 
@@ -289,13 +280,6 @@ public class ExpToCnf{
             }
         }
         else if(operator.equals("v")){
-            //Do rule six here
-            // send left and right to getCnf
-            // split left and right by and's 
-            // cross product left and right
-
-
-            //how do you perform the cross product????
             String resultLeft = getCnf(left);
             String resultRight = getCnf(right);
 
