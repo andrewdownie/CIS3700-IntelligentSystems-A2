@@ -77,7 +77,14 @@ public class ClauseBase{
         List<Clause> resolvents = new LinkedList<Clause>();
         Clause clause1, clause2;
 
+        int resolutionCount = 0;
+
         while(true){
+            resolutionCount++;
+
+            System.out.println("Resolution round: " + resolutionCount);
+            System.out.println("\tClause count of clause base: " + clauses.size()); 
+            System.out.println("\tClause count of (new): " + newClauses.size());
 
             ///
             /// Perform cross product on the clause list
@@ -100,9 +107,8 @@ public class ClauseBase{
 
             ///
             /// If there  is nothing new, return false <- TODO: this doesn't work 
-            ///     Why doesn't this work tho argggggggggggggggggg/////////////////////////////////////
+            ///
             if(HasAllClauses(clauses, newClauses)){
-                
                 return false;
             }
 
@@ -117,10 +123,6 @@ public class ClauseBase{
                 clauses.add(newClause);
             }
 
-            for(Clause c: clauses){
-                //System.out.println("NEW: " + c.GetDisjunction());
-            }
-            newClauses = new LinkedList<Clause>();
         }
 
     }
