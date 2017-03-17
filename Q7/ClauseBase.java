@@ -36,8 +36,12 @@ public class ClauseBase{
     }
 
     public void LoadQuery(String filePath){
+       System.out.println("\nClauses in file: " + filePath);
        String rawClause = FileContents(filePath); 
-       Clause q = new Clause(rawClause.split("[\\r\\n]+")[0]);
+       String splitClause = rawClause.split("[\\r\\n]+")[0];
+       Clause q = new Clause(splitClause);
+
+       System.out.println("\t" + splitClause);
 
        query = q;
        clauses.add(q);
@@ -45,11 +49,13 @@ public class ClauseBase{
     }
 
     public void LoadClauses(String filePath){
+        System.out.println("\nClauses in file: " + filePath);
         String rawClauses = FileContents(filePath);
         String[] splitClauses = rawClauses.split("[\\r\\n]+");
 
         for(String clause: splitClauses){
-            clauses.add(new Clause(clause));//TODO make teh constructor for clause rip the clause apart
+            System.out.println("\t" + clause); 
+            clauses.add(new Clause(clause));
         }
     }
 
@@ -70,7 +76,6 @@ public class ClauseBase{
         List<Clause> newClauses = new LinkedList<Clause>();
         List<Clause> resolvents = new LinkedList<Clause>();
         Clause clause1, clause2;
-
 
         while(true){
 
@@ -95,7 +100,7 @@ public class ClauseBase{
 
             ///
             /// If there  is nothing new, return false <- TODO: this doesn't work 
-            ///     Why doesn't this work tho argggggggggggggggggg
+            ///     Why doesn't this work tho argggggggggggggggggg/////////////////////////////////////
             if(HasAllClauses(clauses, newClauses)){
                 
                 return false;
@@ -113,10 +118,11 @@ public class ClauseBase{
             }
 
             for(Clause c: clauses){
-                System.out.println("NEW: " + c.GetDisjunction());
+                //System.out.println("NEW: " + c.GetDisjunction());
             }
             newClauses = new LinkedList<Clause>();
         }
+
     }
 
     private boolean HasAllClauses(List<Clause> container, List<Clause> containee){
@@ -149,8 +155,25 @@ public class ClauseBase{
 
     private List<Clause> Resolve(Clause clause1, Clause clause2){
         //System.out.println("1: " + clause1.GetDisjunction() + ", 2: " + clause2.GetDisjunction());
+        List<Literal> complimentList = new LinkedList<Literal>();
         List<Clause> result = new LinkedList<Clause>();
-        result.add(new Clause("M"));
+        //result.add(new Clause("M"));
+
+
+        for(Literal l1: clause1.literals){
+            for(Literal l2: clause2.literals){
+
+                if(l1.IsOpposite(l2)){
+                    Clause newClause = new Clause(clause1, clause2);
+                    newClause.Remove(l1);
+                    newClause.Remove(l2);
+                    result.add(newClause);
+                }
+
+            }
+        }
+
+        result.add( new Clause(clause1.GetDisjunction() + " v " + clause2.GetDisjunction()) );
 
         return result;
     }

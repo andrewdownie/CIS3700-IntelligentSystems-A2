@@ -19,7 +19,7 @@ public class Literal{
 
     public String GetSymbolWithSign(){
         if(sign == true){
-            return "~" + symbol;
+            return "~" + symbol.trim();
         }
 
         return symbol;
@@ -27,6 +27,22 @@ public class Literal{
 
     public boolean Compare(Literal other){
         if(sign = other.sign){
+            if(symbol.equals(other.symbol)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean SameSymbol(Literal other){
+        if(symbol.equals(other.symbol)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean IsOpposite(Literal other){
+        if(sign != other.sign){
             if(symbol.equals(other.symbol)){
                 return true;
             }

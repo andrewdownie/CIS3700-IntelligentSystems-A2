@@ -1,2 +1,2 @@
 #!/bin/bash
-java Resolution KbCnfFile QueryFile PerceptFile;
+java Resolution KbCnfFile QueryFile PerceptFile ;

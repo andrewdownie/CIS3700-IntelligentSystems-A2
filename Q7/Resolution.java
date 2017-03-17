@@ -10,12 +10,12 @@ public class Resolution{
         String kb_path, percept_path, query_path;
 
         kb_path = args[0];
-        percept_path = args[1];
-        query_path = args[2];
+        query_path = args[1];
+        percept_path = args[2];
 
         ClauseBase cb = new ClauseBase();
-        cb.LoadClauses(kb_path);
         cb.LoadClauses(percept_path);
+        cb.LoadClauses(kb_path);
         cb.LoadQuery(query_path);
 
         //System.out.println(cb.GetConjunction());

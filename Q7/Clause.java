@@ -21,6 +21,17 @@ public class Clause{
         }
     }
 
+    public Clause(Clause clause1, Clause clause2){
+        literals = new LinkedList<Literal>();
+
+        for(Literal l: clause1.literals){
+            literals.add(l);
+        }
+        for(Literal l: clause2.literals){
+            literals.add(l);
+        }
+    }
+
     public Clause(){
         literals = new LinkedList<Literal>(); 
     }
@@ -49,8 +60,11 @@ public class Clause{
             matchFound = false;
         }
 
-        //System.out.println("All literals matched");
         return true;
+    }
+
+    public void Remove(Literal remove){
+        literals.remove(remove);
     }
 
 
