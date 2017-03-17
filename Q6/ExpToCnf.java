@@ -3,13 +3,16 @@ import java.nio.file.Paths;
 import java.util.*; 
 import java.util.List; 
 import java.util.Arrays;
+import java.io.PrintWriter;
 
 public class ExpToCnf{
     public static void main(String[] args){
         System.out.println("\n---- Starting program ExpToCnf ----");
+        PrintWriter pw = null;
 
 
         String expFile_Contents = "";
+        String[] expFile_Split = null;
         String expFile_Path, cnfFile_Path;
 
         expFile_Path = args[0];
@@ -19,26 +22,42 @@ public class ExpToCnf{
         /// Read teh ExpFile in
         try{
             expFile_Contents = new String(Files.readAllBytes(Paths.get(expFile_Path)));
+            expFile_Split = expFile_Contents.split("[\\r\\n]+");
         }
         catch(Exception e){
             System.out.println("Error opening exp file: " + expFile_Path);
+            System.exit(1);
         }
 
+        try{
+            pw = new PrintWriter(cnfFile_Path);
+        }
+        catch(Exception e){
+            System.out.println("Error opening cnf file for writing: " + cnfFile_Path);
+            System.exit(2);
+        }
 
         ///
         /// Print the contents of ExpFile for human verification
         System.out.println("\n\t---- ExpFile contents ----");
-        System.out.println(expFile_Contents);
+        System.out.println("\t" + expFile_Contents);
         System.out.println("");
 
         ///
         /// Run the getCnf algorithm
         ///
-        String cnfResult = getCnf(expFile_Contents);
+        for(String curLine: expFile_Split){
+            String cnfResult = getCnf(curLine);
 
-        System.out.println("Result is: " + cnfResult);   
+            System.out.println("Return: " + cnfResult);   
 
-        CleanTautologies(cnfResult);
+            cnfResult = CleanTautologies(cnfResult);
+
+            System.out.println("Return: " + cnfResult);
+            pw.println(cnfResult);
+        }
+        pw.close();
+        //write result to output file here
 
     }
 
@@ -88,7 +107,7 @@ public class ExpToCnf{
             }
         }
 
-        System.out.println(result);
+        //System.out.println(result);
         return result; 
     }
 

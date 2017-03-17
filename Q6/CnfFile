@@ -1,1 +1,1 @@
-This is cnf file.
+(R v ~P) ^ (R v Q) ^ (P v ~Q v ~R)
