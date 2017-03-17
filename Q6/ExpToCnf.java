@@ -47,6 +47,7 @@ public class ExpToCnf{
         /// Run the getCnf algorithm
         ///
         for(String curLine: expFile_Split){
+            System.out.println("\n\n---> Starting sentance: " + curLine + " <---\n");
             String cnfResult = getCnf(curLine);
 
             System.out.println("Return: " + cnfResult);   
@@ -54,7 +55,7 @@ public class ExpToCnf{
             cnfResult = CleanTautologies(cnfResult);
 
             System.out.println("Return: " + cnfResult);
-            pw.println(cnfResult);
+            pw.println(cnfResult + "\n\r");
         }
 
         pw.close();

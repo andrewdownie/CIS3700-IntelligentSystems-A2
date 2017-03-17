@@ -1,1 +1,2 @@
 (R v ~P) ^ (R v Q) ^ (P v ~Q v ~R)
+
